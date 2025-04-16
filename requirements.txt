@@ -1,0 +1,12 @@
+torchvision
+torch
+opencv-python
+numpy==1.24
+matplotlib
+tensorboard
+rich
+geotiff
+imagecodecs
+PyYAML
+tqdm
+timm

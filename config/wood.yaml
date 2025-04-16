@@ -1,0 +1,60 @@
+DATASET:
+  dataset: lglncls
+  name: lglncls
+  data_path: /home/yuan/data/HisMap/LGLN/data_img_cls_384_128
+  mode: train
+  batch_size: 64
+  n_workers: 4
+  gpus: 0
+  cls_label: 0
+
+  train_pipeline:
+    - LGLNViTTransform:
+        mode: train
+  test_pipeline:
+    - LGLNViTTransform:
+        mode: test
+
+TRAIN:
+  log_every: 10
+  max_epoch: 100
+  gpus: 0
+  hooks: 'pycfg.hooks.cvit_train_hooks'
+  optimizer:
+    lr: 5e-4
+    weight_decay: 0.05
+    betas: [0.9, 0.98]
+  lr_scheduler:
+    policy: 'CosineAnnealingWarm'
+    warmup_lr: 1e-6
+    min_lr: 1e-5
+    decay_epochs: 30
+    warmup_epochs: 5
+    cooldown_epochs: 10
+    patience_epochs: 19
+    decay_rate: 0.1
+    num_epochs: 100
+
+TEST:
+  hooks:
+    - type: CCVitResultHook
+
+
+MODEL:
+  type: 'vit_classifier.VitClassifier'
+  vit_type: conv_384_v1
+  drop_patch: true
+  loss_cfg:
+    type: FocalLoss
+    use_sigmoid: false
+
+
+
+
+
+
+
+
+
+
+
